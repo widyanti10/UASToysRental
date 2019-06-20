@@ -28,15 +28,28 @@ export default class Daftarbarang extends React.Component{
 }
 
     render() {
-      const numColumns = 3;
         return (
             <View style={styles.containerMain}>
               <Header judul={"Daftar Barang"} />
               <TouchableHighlight activeOpacity={0.5} style={styles.buttonStyle} onPress={() => this.props.navigation.navigate('Tambahdata')}>
                     <Text style={styles.Text}>ADD</Text>
             </TouchableHighlight>
-              <View style={styles.box2}>
-                </View>
+              
+              <FlatList
+                    keyExtractor={(item, index) => index.toString()}
+                    data={this.state.data}
+                    renderItem={({item}) => (
+                      <ListItem style={styles.list} onPress={()=>this.props.navigation.navigate("Detailbarang",{kode_barang:item.kode_barang})}
+                      title={item.nama_barang}
+                            leftAvatar={{ source: { uri:"https://widyanti1050.000webhostapp.com/apitoys/img/"+item.foto},}}
+                            
+                        />
+                  
+                        
+                    )
+                    }
+                />
+               
                 <View style={styles.box1}>
                 <TouchableHighlight activeOpacity={0.5} style={styles.buttonStyle2} onPress={() => this.props.navigation.navigate('Order')}>
                     <Text style={styles.Text}>ORDER</Text>
@@ -106,9 +119,7 @@ const styles = StyleSheet.create({
     height: 400,
     width: 300,
     marginLeft: 30,
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
+    flexDirection: "row",
     borderRadius: 5,
   },
   });
